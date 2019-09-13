@@ -1,0 +1,222 @@
+[1mdiff --git a/dasd b/dasd[m
+[1mnew file mode 100644[m
+[1mindex 0000000..b3561b8[m
+[1m--- /dev/null[m
+[1m+++ b/dasd[m
+[36m@@ -0,0 +1,122 @@[m
+[32m+[m[32m[1mdiff --git a/produtos/pom.xml b/produtos/pom.xml[m[m
+[32m+[m[32m[1mindex 0464811..5616bac 100644[m[m
+[32m+[m[32m[1m--- a/produtos/pom.xml[m[m
+[32m+[m[32m[1m+++ b/produtos/pom.xml[m[m
+[32m+[m[32m[36m@@ -8,6 +8,7 @@[m[m
+[32m+[m[41m [m	[32m<version>1.0-SNAPSHOT</version>[m[m
+[32m+[m[41m [m	[32m<name>produtos</name>[m[m
+[32m+[m[41m [m	[32m<url>http://maven.apache.org</url>[m[m
+[32m+[m[32m[32m+[m[m
+[32m+[m[41m [m	[32m<dependencies>[m[m
+[32m+[m[41m [m		[32m<dependency>[m[m
+[32m+[m[41m [m			[32m<groupId>junit</groupId>[m[m
+[32m+[m[32m[36m@@ -42,19 +43,12 @@[m[m
+[32m+[m[41m [m					[32m</execution>[m[m
+[32m+[m[41m [m				[32m</executions>[m[m
+[32m+[m[41m [m			[32m</plugin>[m[m
+[32m+[m[32m[32m+[m[m
+[32m+[m[41m [m			[32m<plugin>[m[m
+[32m+[m[41m [m				[32m<groupId>org.jacoco</groupId>[m[m
+[32m+[m[41m [m				[32m<artifactId>jacoco-maven-plugin</artifactId>[m[m
+[32m+[m[32m[31m-				<version>0.7.5.201505241946</version>[m[m
+[32m+[m[32m[31m-				<executions>[m[m
+[32m+[m[32m[31m-					<execution>[m[m
+[32m+[m[32m[31m-						<goals>[m[m
+[32m+[m[32m[31m-							<goal>prepare-agent</goal>[m[m
+[32m+[m[32m[31m-							<goal>report</goal>[m[m
+[32m+[m[32m[31m-						</goals>[m[m
+[32m+[m[32m[31m-					</execution>[m[m
+[32m+[m[32m[31m-				</executions>[m[m
+[32m+[m[41m [m			[32m</plugin>[m[m
+[32m+[m[32m[32m+[m[41m			[m[m
+[32m+[m[41m [m		[32m</plugins>[m[m
+[32m+[m[41m [m	[32m</build>[m[m
+[32m+[m[32m [m[m
+[32m+[m[32m[1mdiff --git a/produtos/src/main/java/br/com/alura/maven/ValidadorCPF.java b/produtos/src/main/java/br/com/alura/maven/ValidadorCPF.java[m[m
+[32m+[m[32m[1mindex 74c1e16..3861fd0 100644[m[m
+[32m+[m[32m[1m--- a/produtos/src/main/java/br/com/alura/maven/ValidadorCPF.java[m[m
+[32m+[m[32m[1m+++ b/produtos/src/main/java/br/com/alura/maven/ValidadorCPF.java[m[m
+[32m+[m[32m[36m@@ -5,36 +5,42 @@[m [mimport java.util.InputMismatchException;[m[m
+[32m+[m[32m public class ValidadorCPF {[m[m
+[32m+[m[41m [m	[32m[m[m
+[32m+[m[41m [m	[32mpublic boolean isCPF(String valor) {[m[m
+[32m+[m[32m[32m+[m[41m		[m[m
+[32m+[m[41m [m		[32mString CPF = formataPontuacao(valor);[m[m
+[32m+[m[32m[32m+[m[41m		[m[m
+[32m+[m[32m[32m+[m[32m        // considera-se erro CPF's formados por uma sequencia de numeros iguais[m[m
+[32m+[m[32m         if (CPF.equals("00000000000") ||[m[m
+[32m+[m[32m             CPF.equals("11111111111") ||[m[m
+[32m+[m[32m             CPF.equals("22222222222") || CPF.equals("33333333333") ||[m[m
+[32m+[m[32m             CPF.equals("44444444444") || CPF.equals("55555555555") ||[m[m
+[32m+[m[32m             CPF.equals("66666666666") || CPF.equals("77777777777") ||[m[m
+[32m+[m[32m             CPF.equals("88888888888") || CPF.equals("99999999999") ||[m[m
+[32m+[m[32m[31m-            CPF.length() != 11)[m[m
+[32m+[m[32m[31m-            return false;[m[m
+[32m+[m[32m[32m+[m[32m            (CPF.length() != 11))[m[m
+[32m+[m[32m[32m+[m[32m            return(false);[m[m
+[32m+[m[32m           [m[m
+[32m+[m[32m         char dig10, dig11;[m[m
+[32m+[m[32m         int sm, i, r, num, peso;[m[m
+[32m+[m[32m           [m[m
+[32m+[m[32m[31m-      [m[m
+[32m+[m[32m[32m+[m[32m        // "try" - protege o codigo para eventuais erros de conversao de tipo (int)[m[m
+[32m+[m[32m         try {[m[m
+[32m+[m[32m[32m+[m[32m        // Calculo do 1o. Digito Verificador[m[m
+[32m+[m[32m             sm = 0;[m[m
+[32m+[m[32m             peso = 10;[m[m
+[32m+[m[32m             for (i=0; i<9; i++) {              [m[m
+[32m+[m[32m[31m-   [m[m
+[32m+[m[32m[32m+[m[32m        // converte o i-esimo caractere do CPF em um numero:[m[m
+[32m+[m[32m[32m+[m[32m        // por exemplo, transforma o caractere '0' no inteiro 0[m[41m         [m[m
+[32m+[m[32m[32m+[m[32m        // (48 eh a posicao de '0' na tabela ASCII)[m[41m         [m[m
+[32m+[m[32m             num = (int)(CPF.charAt(i) - 48); [m[m
+[32m+[m[32m             sm = sm + (num * peso);[m[m
+[32m+[m[32m             peso = peso - 1;[m[m
+[32m+[m[32m             }[m[m
+[32m+[m[32m           [m[m
+[32m+[m[32m             r = 11 - (sm % 11);[m[m
+[32m+[m[32m[31m-            if (r == 10 || r == 11)[m[m
+[32m+[m[32m[32m+[m[32m            if ((r == 10) || (r == 11))[m[m
+[32m+[m[32m                 dig10 = '0';[m[m
+[32m+[m[32m[31m-            else dig10 = (char)(r + 48); [m[m
+[32m+[m[32m[32m+[m[32m            else dig10 = (char)(r + 48); // converte no respectivo caractere numerico[m[m
+[32m+[m[32m           [m[m
+[32m+[m[32m[31m-     [m[m
+[32m+[m[32m[32m+[m[32m        // Calculo do 2o. Digito Verificador[m[m
+[32m+[m[32m             sm = 0;[m[m
+[32m+[m[32m             peso = 11;[m[m
+[32m+[m[32m             for(i=0; i<10; i++) {[m[m
+[32m+[m[32m[36m@@ -44,16 +50,16 @@[m [mpublic class ValidadorCPF {[m[m
+[32m+[m[32m             }[m[m
+[32m+[m[32m           [m[m
+[32m+[m[32m             r = 11 - (sm % 11);[m[m
+[32m+[m[32m[31m-            if (r == 10 || r == 11)[m[m
+[32m+[m[32m[32m+[m[32m            if ((r == 10) || (r == 11))[m[m
+[32m+[m[32m                  dig11 = '0';[m[m
+[32m+[m[32m             else dig11 = (char)(r + 48);[m[m
+[32m+[m[32m           [m[m
+[32m+[m[32m[31m-     [m[m
+[32m+[m[32m[31m-            if (dig10 == CPF.charAt(9) && dig11 == CPF.charAt(10))[m[m
+[32m+[m[32m[31m-                 return true;[m[m
+[32m+[m[32m[31m-            else return false;[m[m
+[32m+[m[32m[32m+[m[32m        // Verifica se os digitos calculados conferem com os digitos informados.[m[m
+[32m+[m[32m[32m+[m[32m            if ((dig10 == CPF.charAt(9)) && (dig11 == CPF.charAt(10)))[m[m
+[32m+[m[32m[32m+[m[32m                 return(true);[m[m
+[32m+[m[32m[32m+[m[32m            else return(false);[m[m
+[32m+[m[32m                 } catch (InputMismatchException erro) {[m[m
+[32m+[m[32m[31m-                return false;[m[m
+[32m+[m[32m[32m+[m[32m                return(false);[m[m
+[32m+[m[32m             }[m[m
+[32m+[m[32m         }[m[m
+[32m+[m[41m [m	[32m[m[m
+[32m+[m[32m[36m@@ -67,8 +73,8 @@[m [mpublic class ValidadorCPF {[m[m
+[32m+[m[41m [m		[32m}[m[m
+[32m+[m[32m           [m[m
+[32m+[m[32m         public String imprimeCPF(String CPF) {[m[m
+[32m+[m[32m[31m-            return CPF.substring(0, 3) + "." + CPF.substring(3, 6) + "." +[m[m
+[32m+[m[32m[31m-            CPF.substring(6, 9) + "-" + CPF.substring(9, 11);[m[m
+[32m+[m[32m[32m+[m[32m            return(CPF.substring(0, 3) + "." + CPF.substring(3, 6) + "." +[m[m
+[32m+[m[32m[32m+[m[32m            CPF.substring(6, 9) + "-" + CPF.substring(9, 11));[m[m
+[32m+[m[32m         }[m[m
+[32m+[m[32m [m[m
+[32m+[m[32m }[m[m
+[1mdiff --git a/produtos/.classpath b/produtos/.classpath[m
+[1mindex ebde520..1164617 100644[m
+[1m--- a/produtos/.classpath[m
+[1m+++ b/produtos/.classpath[m
+[36m@@ -21,6 +21,7 @@[m
+ 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">[m
+ 		<attributes>[m
+ 			<attribute name="maven.pomderived" value="true"/>[m
+[32m+[m			[32m<attribute name="org.eclipse.jst.component.nondependency" value=""/>[m
+ 		</attributes>[m
+ 	</classpathentry>[m
+ 	<classpathentry kind="output" path="target/classes"/>[m
+[1mdiff --git a/produtos/.project b/produtos/.project[m
+[1mindex e475121..4955e49 100644[m
+[1m--- a/produtos/.project[m
+[1m+++ b/produtos/.project[m
+[36m@@ -5,6 +5,11 @@[m
+ 	<projects>[m
+ 	</projects>[m
+ 	<buildSpec>[m
+[32m+[m		[32m<buildCommand>[m
+[32m+[m			[32m<name>org.eclipse.wst.common.project.facet.core.builder</name>[m
+[32m+[m			[32m<arguments>[m
+[32m+[m			[32m</arguments>[m
+[32m+[m		[32m</buildCommand>[m
+ 		<buildCommand>[m
+ 			<name>org.eclipse.jdt.core.javabuilder</name>[m
+ 			<arguments>[m
+[36m@@ -15,9 +20,17 @@[m
+ 			<arguments>[m
+ 			</arguments>[m
+ 		</buildCommand>[m
+[32m+[m		[32m<buildCommand>[m
+[32m+[m			[32m<name>org.eclipse.wst.validation.validationbuilder</name>[m
+[32m+[m			[32m<arguments>[m
+[32m+[m			[32m</arguments>[m
+[32m+[m		[32m</buildCommand>[m
+ 	</buildSpec>[m
+ 	<natures>[m
+[32m+[m		[32m<nature>org.eclipse.jem.workbench.JavaEMFNature</nature>[m
+[32m+[m		[32m<nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>[m
+ 		<nature>org.eclipse.jdt.core.javanature</nature>[m
+ 		<nature>org.eclipse.m2e.core.maven2Nature</nature>[m
+[32m+[m		[32m<nature>org.eclipse.wst.common.project.facet.core.nature</nature>[m
+ 	</natures>[m
+ </projectDescription>[m
+[1mdiff --git a/produtos/.settings/org.eclipse.jdt.core.prefs b/produtos/.settings/org.eclipse.jdt.core.prefs[m
+[1mindex 71ac301..d43d712 100644[m
+[1m--- a/produtos/.settings/org.eclipse.jdt.core.prefs[m
+[1m+++ b/produtos/.settings/org.eclipse.jdt.core.prefs[m
+[36m@@ -1,6 +1,9 @@[m
+ eclipse.preferences.version=1[m
+[32m+[m[32morg.eclipse.jdt.core.compiler.codegen.inlineJsrBytecode=enabled[m
+ org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.5[m
+ org.eclipse.jdt.core.compiler.compliance=1.5[m
+[32m+[m[32morg.eclipse.jdt.core.compiler.problem.assertIdentifier=error[m
+[32m+[m[32morg.eclipse.jdt.core.compiler.problem.enumIdentifier=error[m
+ org.eclipse.jdt.core.compiler.problem.forbiddenReference=warning[m
+ org.eclipse.jdt.core.compiler.release=disabled[m
+ org.eclipse.jdt.core.compiler.source=1.5[m
+[1mdiff --git a/produtos/.settings/org.eclipse.wst.common.component b/produtos/.settings/org.eclipse.wst.common.component[m
+[1mnew file mode 100644[m
+[1mindex 0000000..17f458f[m
+[1m--- /dev/null[m
+[1m+++ b/produtos/.settings/org.eclipse.wst.common.component[m
+[36m@@ -0,0 +1,5 @@[m
+[32m+[m[32m<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">[m
+[32m+[m[32m    <wb-module deploy-name="produtos">[m
+[32m+[m[32m        <wb-resource deploy-path="/" source-path="/src/main/java"/>[m
+[32m+[m[32m    </wb-module>[m
+[32m+[m[32m</project-modules>[m
+[1mdiff --git a/produtos/.settings/org.eclipse.wst.common.project.facet.core.xml b/produtos/.settings/org.eclipse.wst.common.project.facet.core.xml[m
+[1mnew file mode 100644[m
+[1mindex 0000000..a1f6907[m
+[1m--- /dev/null[m
+[1m+++ b/produtos/.settings/org.eclipse.wst.common.project.facet.core.xml[m
+[36m@@ -0,0 +1,5 @@[m
+[32m+[m[32m<?xml version="1.0" encoding="UTF-8"?>[m
+[32m+[m[32m<faceted-project>[m
+[32m+[m[32m  <installed facet="java" version="1.5"/>[m
+[32m+[m[32m  <installed facet="jst.utility" version="1.0"/>[m
+[32m+[m[32m</faceted-project>[m
+[1mdiff --git a/produtos/pom.xml b/produtos/pom.xml[m
+[1mindex 0464811..45ff98a 100644[m
+[1m--- a/produtos/pom.xml[m
+[1m+++ b/produtos/pom.xml[m
+[36m@@ -42,6 +42,7 @@[m
+ 					</execution>[m
+ 				</executions>[m
+ 			</plugin>[m
+[32m+[m[41m			[m
+ 			<plugin>[m
+ 				<groupId>org.jacoco</groupId>[m
+ 				<artifactId>jacoco-maven-plugin</artifactId>[m

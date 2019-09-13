@@ -1,0 +1,122 @@
+[1mdiff --git a/produtos/pom.xml b/produtos/pom.xml[m
+[1mindex 0464811..5616bac 100644[m
+[1m--- a/produtos/pom.xml[m
+[1m+++ b/produtos/pom.xml[m
+[36m@@ -8,6 +8,7 @@[m
+ 	<version>1.0-SNAPSHOT</version>[m
+ 	<name>produtos</name>[m
+ 	<url>http://maven.apache.org</url>[m
+[32m+[m
+ 	<dependencies>[m
+ 		<dependency>[m
+ 			<groupId>junit</groupId>[m
+[36m@@ -42,19 +43,12 @@[m
+ 					</execution>[m
+ 				</executions>[m
+ 			</plugin>[m
+[32m+[m
+ 			<plugin>[m
+ 				<groupId>org.jacoco</groupId>[m
+ 				<artifactId>jacoco-maven-plugin</artifactId>[m
+[31m-				<version>0.7.5.201505241946</version>[m
+[31m-				<executions>[m
+[31m-					<execution>[m
+[31m-						<goals>[m
+[31m-							<goal>prepare-agent</goal>[m
+[31m-							<goal>report</goal>[m
+[31m-						</goals>[m
+[31m-					</execution>[m
+[31m-				</executions>[m
+ 			</plugin>[m
+[32m+[m[41m			[m
+ 		</plugins>[m
+ 	</build>[m
+ [m
+[1mdiff --git a/produtos/src/main/java/br/com/alura/maven/ValidadorCPF.java b/produtos/src/main/java/br/com/alura/maven/ValidadorCPF.java[m
+[1mindex 74c1e16..3861fd0 100644[m
+[1m--- a/produtos/src/main/java/br/com/alura/maven/ValidadorCPF.java[m
+[1m+++ b/produtos/src/main/java/br/com/alura/maven/ValidadorCPF.java[m
+[36m@@ -5,36 +5,42 @@[m [mimport java.util.InputMismatchException;[m
+ public class ValidadorCPF {[m
+ 	[m
+ 	public boolean isCPF(String valor) {[m
+[32m+[m[41m		[m
+ 		String CPF = formataPontuacao(valor);[m
+[32m+[m[41m		[m
+[32m+[m[32m        // considera-se erro CPF's formados por uma sequencia de numeros iguais[m
+         if (CPF.equals("00000000000") ||[m
+             CPF.equals("11111111111") ||[m
+             CPF.equals("22222222222") || CPF.equals("33333333333") ||[m
+             CPF.equals("44444444444") || CPF.equals("55555555555") ||[m
+             CPF.equals("66666666666") || CPF.equals("77777777777") ||[m
+             CPF.equals("88888888888") || CPF.equals("99999999999") ||[m
+[31m-            CPF.length() != 11)[m
+[31m-            return false;[m
+[32m+[m[32m            (CPF.length() != 11))[m
+[32m+[m[32m            return(false);[m
+           [m
+         char dig10, dig11;[m
+         int sm, i, r, num, peso;[m
+           [m
+[31m-      [m
+[32m+[m[32m        // "try" - protege o codigo para eventuais erros de conversao de tipo (int)[m
+         try {[m
+[32m+[m[32m        // Calculo do 1o. Digito Verificador[m
+             sm = 0;[m
+             peso = 10;[m
+             for (i=0; i<9; i++) {              [m
+[31m-   [m
+[32m+[m[32m        // converte o i-esimo caractere do CPF em um numero:[m
+[32m+[m[32m        // por exemplo, transforma o caractere '0' no inteiro 0[m[41m         [m
+[32m+[m[32m        // (48 eh a posicao de '0' na tabela ASCII)[m[41m         [m
+             num = (int)(CPF.charAt(i) - 48); [m
+             sm = sm + (num * peso);[m
+             peso = peso - 1;[m
+             }[m
+           [m
+             r = 11 - (sm % 11);[m
+[31m-            if (r == 10 || r == 11)[m
+[32m+[m[32m            if ((r == 10) || (r == 11))[m
+                 dig10 = '0';[m
+[31m-            else dig10 = (char)(r + 48); [m
+[32m+[m[32m            else dig10 = (char)(r + 48); // converte no respectivo caractere numerico[m
+           [m
+[31m-     [m
+[32m+[m[32m        // Calculo do 2o. Digito Verificador[m
+             sm = 0;[m
+             peso = 11;[m
+             for(i=0; i<10; i++) {[m
+[36m@@ -44,16 +50,16 @@[m [mpublic class ValidadorCPF {[m
+             }[m
+           [m
+             r = 11 - (sm % 11);[m
+[31m-            if (r == 10 || r == 11)[m
+[32m+[m[32m            if ((r == 10) || (r == 11))[m
+                  dig11 = '0';[m
+             else dig11 = (char)(r + 48);[m
+           [m
+[31m-     [m
+[31m-            if (dig10 == CPF.charAt(9) && dig11 == CPF.charAt(10))[m
+[31m-                 return true;[m
+[31m-            else return false;[m
+[32m+[m[32m        // Verifica se os digitos calculados conferem com os digitos informados.[m
+[32m+[m[32m            if ((dig10 == CPF.charAt(9)) && (dig11 == CPF.charAt(10)))[m
+[32m+[m[32m                 return(true);[m
+[32m+[m[32m            else return(false);[m
+                 } catch (InputMismatchException erro) {[m
+[31m-                return false;[m
+[32m+[m[32m                return(false);[m
+             }[m
+         }[m
+ 	[m
+[36m@@ -67,8 +73,8 @@[m [mpublic class ValidadorCPF {[m
+ 		}[m
+           [m
+         public String imprimeCPF(String CPF) {[m
+[31m-            return CPF.substring(0, 3) + "." + CPF.substring(3, 6) + "." +[m
+[31m-            CPF.substring(6, 9) + "-" + CPF.substring(9, 11);[m
+[32m+[m[32m            return(CPF.substring(0, 3) + "." + CPF.substring(3, 6) + "." +[m
+[32m+[m[32m            CPF.substring(6, 9) + "-" + CPF.substring(9, 11));[m
+         }[m
+ [m
+ }[m
